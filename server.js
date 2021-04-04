@@ -3,14 +3,22 @@ const path = require("path")
 const axios = require('axios')
 
 const app = express()
-// app.use(express.static(__dirname,"public"))
+
 app.use("/public",express.static("public"))
 
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 
 app.get("/", (ret,res)=>{
-    res.render("index")
+    let properties = {
+        orders: [
+            "LIOV-JP001",
+            "LIOV-JP002",
+            "LIOV-JP003",
+            "LIOV-JP004"
+        ]
+    }
+    res.render("index",properties)
 })
 
 app.listen(3000, () => {
