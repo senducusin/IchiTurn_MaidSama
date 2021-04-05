@@ -103,14 +103,12 @@
 
     function addNewCardCode(cardCode){
         let savedCardCodes = getCardCodes()
-        console.log(`DEBUG: checking ${cardCode} ${savedCardCodes}`)
         if (savedCardCodes.length == 0 || savedCardCodes.indexOf(cardCode) == -1) {
             savedCardCodes.push(cardCode)
             localStorage.setItem(localStorageKey, JSON.stringify(savedCardCodes))
             appendNewCardCode(cardCode)
             hideNotification()
             document.getElementById("card-code-input").value = ""
-            console.log(`DEBUG: added ${cardCode} ${savedCardCodes}`)
         }else{
             showNotification("error", "Card code is already in the list")
         }
@@ -150,12 +148,12 @@
         listItem.classList.add("collection-item","row")
 
         let divCardCode = document.createElement("div")
-        divCardCode.classList.add("card-code", "col", "s9")
+        divCardCode.classList.add("card-code", "col", "s8")
         divCardCode.innerText = cardCode
         listItem.appendChild(divCardCode)
 
         let divInputField = document.createElement("div")
-        divInputField.classList.add("input-field","col","s3", "flexy")
+        divInputField.classList.add("input-field","col","s4", "flexy")
         listItem.appendChild(divInputField)
 
         let divSpacer = document.createElement("div")
