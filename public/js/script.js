@@ -103,7 +103,7 @@
 
     function addNewCardCode(cardCode){
         let savedCardCodes = getCardCodes()
-
+        console.log(`DEBUG: checking ${cardCode} ${savedCardCodes}`)
         if (savedCardCodes.length == 0 || savedCardCodes.indexOf(cardCode) == -1) {
             savedCardCodes.push(cardCode)
             localStorage.setItem(localStorageKey, JSON.stringify(savedCardCodes))
