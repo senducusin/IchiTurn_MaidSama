@@ -7,7 +7,7 @@
 }
 
 .extra-space {
-    height: 90px;
+    height: 100px;
     margin-bottom: 25px;
 }
 
@@ -16,7 +16,7 @@
 }
 
 #notification-text {
-    height: 90px;
+    height: 100px;
     white-space: normal;
     align-items: center;
     font-size: 1.2em;
@@ -29,7 +29,7 @@
 .button-container{
     display: flex;
     align-items: center;
-    height: 90px;
+    height: 100px;
 }
 
 .edge-right{
@@ -37,6 +37,6 @@
 }
 
 .collection{
-    height: 45vh;
+    height: 35vh;
     overflow-y:scroll;
 }
