@@ -185,7 +185,7 @@
 
         let value = JSON.parse(savedOrdersString)
 
-        return savedCardCodes = value == null ? [] : value
+        return value == null ? [] : value
     }
 
 })();
