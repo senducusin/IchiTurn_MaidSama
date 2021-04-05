@@ -110,6 +110,7 @@
             appendNewCardCode(cardCode)
             hideNotification()
             document.getElementById("card-code-input").value = ""
+            console.log(`DEBUG: added ${cardCode} ${savedCardCodes}`)
         }else{
             showNotification("error", "Card code is already in the list")
         }
