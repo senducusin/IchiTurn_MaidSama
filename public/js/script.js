@@ -1,8 +1,6 @@
 (function () {
     
     let localStorageKey = "ICHITURN_LOCALSTORAGE_ORDERS"
-    let parentElementCollection = document.querySelector(".collection")
- 
 
     window.addEventListener("load", function(){
         // collect from browser storage
@@ -16,21 +14,13 @@
     })
 
     document.getElementById("submit-card-codes").addEventListener("click", function(){
-        const params = {
-            cardCodes: getCardCodes(),
-        };
-
-        (async () => {
-            const rawResponse = await fetch('/api/send-codes', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(params)
-            });
-            const content = await rawResponse.json();
-        })();
+        if (validateEmailAddressValue()){
+            hideNotification()
+            
+            submit()
+        }else{
+            showNotification("error", "Invalid email address")
+        }
     })
 
     document.getElementById("clear-notification").addEventListener("click",function(){
@@ -49,6 +39,45 @@
     })
 
     // HELPERS
+    function clearCardCodes(){
+        localStorage.setItem(localStorageKey, "[]")
+    }
+
+    function clearUI(){
+        document.querySelector(".collection").innerHTML = ""
+        document.getElementById("email-address-input").value = ""
+    }
+
+    function submit(){
+        const params = {
+            cardCodes: getCardCodes(),
+            emailAddress: document.getElementById("email-address-input").value
+        };
+
+        (async () => {
+            const rawResponse = await fetch('/api/send-codes', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+            });
+
+            const response = await rawResponse.json();
+
+            if (response){
+                if (response.status == "ok"){
+                    showNotification("success", "Request submitted. A quote will be sent to your email shortly.")
+
+                    clearCardCodes()
+                    clearUI()
+                }
+            }
+            // console.log(`test ${content.status}`)
+        })()
+    }
+
     function validateCardCodeValue(cardCode){
 
         if (cardCode.length != 10) return false
@@ -60,6 +89,18 @@
         return true
     }
 
+    function validateEmailAddressValue(){
+        let emailAddress = document.getElementById("email-address-input").value
+
+        if (emailAddress.length == 0) return false
+
+        let regex = emailAddress.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+
+        if (regex != null && regex.length) return true
+
+        return false
+    }
+
     function addNewCardCode(cardCode){
         let savedCardCodes = getCardCodes()
 
@@ -68,6 +109,7 @@
             localStorage.setItem(localStorageKey, JSON.stringify(savedCardCodes))
             appendNewCardCode(cardCode)
             hideNotification()
+            document.getElementById("card-code-input").value = ""
         }else{
             showNotification("error", "Card code is already in the list")
         }
@@ -125,6 +167,7 @@
         button.innerText = "Remove"
 
         button.addEventListener("click",function(){
+            let parentElementCollection = document.querySelector(".collection")
             const cardCode = this.id.replace("button-","").toUpperCase()
             removeCardCode(cardCode)
             parentElementCollection.removeChild(listItem)
@@ -132,6 +175,7 @@
 
         divInputField.appendChild(button)
 
+        let parentElementCollection = document.querySelector(".collection")
         parentElementCollection.appendChild(listItem)
     }
 

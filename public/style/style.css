@@ -35,3 +35,8 @@
 .edge-right{
     float: right;
 }
+
+.collection{
+    height: 55vh;
+    overflow-y:scroll;
+}
