@@ -74,7 +74,6 @@
                     clearUI()
                 }
             }
-            // console.log(`test ${content.status}`)
         })()
     }
 
@@ -133,10 +132,9 @@
         
         let color = type == "error" ? "red" : "teal"
 
-        // notificationContainer.innerText = message
         notificationText.innerText = message
         
-        notificationContainer.classList.add(color, "white-text")
+        notificationContainer.classList.add(color)
         notificationContainer.classList.remove("hidden")
     }
 
