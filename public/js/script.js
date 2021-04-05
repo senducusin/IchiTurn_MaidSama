@@ -182,7 +182,10 @@
 
     function getCardCodes(){
         let savedOrdersString = localStorage.getItem(localStorageKey)
-        return savedCardCodes = JSON.parse(savedOrdersString)
+
+        let value = JSON.parse(savedOrdersString)
+
+        return savedCardCodes = value == null ? [] : value
     }
 
 })();
