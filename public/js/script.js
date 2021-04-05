@@ -104,7 +104,7 @@
     function addNewCardCode(cardCode){
         let savedCardCodes = getCardCodes()
 
-        if (savedCardCodes.indexOf(cardCode) == -1) {
+        if (savedCardCodes.length == 0 || savedCardCodes.indexOf(cardCode) == -1) {
             savedCardCodes.push(cardCode)
             localStorage.setItem(localStorageKey, JSON.stringify(savedCardCodes))
             appendNewCardCode(cardCode)
