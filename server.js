@@ -5,20 +5,25 @@ const axios = require('axios')
 const app = express()
 
 app.use("/public",express.static("public"))
+app.use(express.json())
+
 
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
 
-app.get("/", (ret,res)=>{
-    let properties = {
-        orders: [
-            "LIOV-JP001",
-            "LIOV-JP002",
-            "LIOV-JP003",
-            "LIOV-JP004"
-        ]
+app.get("/", (req,res)=>{
+    res.render("index")
+})
+
+app.post("/api/send-codes",(req,res)=>{
+    const body = req.body
+
+    if(body.hasOwnProperty("cardCodes") === true){
+        console.log(body.cardCodes)
+        res.status(200).send({status:"ok"})
+    }else{
+        res.status(400).send("Invalid Request")
     }
-    res.render("index",properties)
 })
 
 app.listen(3000, () => {

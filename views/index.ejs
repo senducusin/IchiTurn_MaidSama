@@ -5,10 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link rel="stylesheet" href="/public/style/style.css">
     <title>Maid Sama</title>
 </head>
-<body>
+<body id="body">
     <nav>
         <div class="nav-wrapper">
           <a href="#" class="brand-logo">Ichi Turn</a>
@@ -16,32 +18,38 @@
     </nav>
 
     <div class="row">
+        <div class="col s12 extra-space row">
+            <div id="notification" class="card-panel row col s12 hidden">
+
+                <span id="notification-text" class="white-text col s10 flexy"></span>
+                <div class="col s2 button-container">
+                    <div class="spacer"></div>
+                    <a
+                    id="clear-notification" class="btn-floating btn-large waves-effect waves-light red lighten-2">
+                        <i class="material-icons">clear</i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
         <div class="input-field col s10">
           <input placeholder="Type any card code here..." type="text" class="validate" id="card-code-input">
           <label for="cardCode">Card Code</label>
         </div>
+
         <div class="input-field col s2">
-            <a class="waves-effect waves-light btn" id="add-card-code">Add Card Code</a>
+            <a
+                    id="add-card-code" class="btn-floating btn-large waves-effect waves-light teal lighten-2">
+                        <i class="material-icons">add</i>
+                    </a>
         </div>
 
         <div class="col s12">
-            <ul class="collection">
-                <% for(var i=0; i<orders.length; i++) {%>
-
-                    <li class="collection-item row">
-                        <div class="card-code col s9"><%= orders[i] %></div>
-                        <div class="input-field col s3">
-                            <a class="waves-effect waves-light btn red">Remove</a>
-                        </div>
-                    </li>
-                </li>
-                 <% } %>
-            </ul>
-
-
+            <ul class="collection"></ul>
 
         <div class="input-field col s12">
-            <a class="waves-effect waves-light btn blue">Submit</a>
+            <a id="submit-card-codes" class="waves-effect waves-light btn blue">Submit</a>
         </div>
       </div>
       </div>
