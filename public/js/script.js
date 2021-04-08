@@ -16,7 +16,7 @@
     document.getElementById("submit-card-codes").addEventListener("click", function () {
         if (validateEmailAddressValue()) {
             hideNotification()
-
+            shouldStartLoading(true)
             submit()
         } else {
             showNotification("error", "Invalid email address")
@@ -28,12 +28,26 @@
     })
 
     document.getElementById("add-card-code").addEventListener("click", function () {
-        let cardCode = document.getElementById("card-input").value
+        let cardKeyword = document.getElementById("card-input").value
 
-        addNewCardCode(cardCode)
+        addNewCardCode(cardKeyword)
+
     })
 
     // HELPERS
+
+    function checkDuplicates(newCard) {
+        let savedCards = getCardsFromStorage()
+
+        let duplicate = savedCards.filter(card => (card.passcode == newCard.passcode))
+
+        if (duplicate.length > 0) {
+            return true
+        }
+
+        return false
+    }
+
     function clearCards() {
         localStorage.setItem(localStorageKey, "[]")
     }
@@ -66,9 +80,11 @@
                 if (response.status == "ok") {
                     showNotification("success", "Request submitted. A quote will be sent to your email shortly.")
                     console.log(response)
-                    // clearCards()
-                    // clearUI()
+                    clearCards()
+                    clearUI()
                 }
+
+                shouldStartLoading(false)
             }
         })()
 
@@ -109,15 +125,20 @@
 
                 if (response) {
                     if (response.status == "ok") {
-                        let card = response.card
-
                         if (response.hasOwnProperty("card")) {
-                            savedCards.push(card)
-                            localStorage.setItem(localStorageKey, JSON.stringify(savedCards))
-                            appendNewCardElement(card)
-                            scrollCardsToBottom()
-                            hideNotification()
-                            clearInput()
+
+                            let card = response.card
+
+                            if (!checkDuplicates(card)) {
+                                savedCards.push(card)
+                                localStorage.setItem(localStorageKey, JSON.stringify(savedCards))
+                                appendNewCardElement(card)
+                                scrollCardsToBottom()
+                                hideNotification()
+                                clearInput()
+                            } else {
+                                showNotification("error", `${card.name} is already in the list`)
+                            }
                         }
 
                     } else {
@@ -212,6 +233,30 @@
         let value = JSON.parse(savedOrdersString)
 
         return value == null ? [] : value
+    }
+
+    function shouldEnableButtons(enable) {
+        const buttons = document.querySelectorAll("a");
+        buttons.forEach((button) => {
+            if (enable) {
+                button.classList.remove("disabled")
+            } else {
+                button.classList.add("disabled")
+            }
+        });
+    }
+
+    function shouldDisplayPreloader(show) {
+        if (show) {
+            document.getElementById("pre-loader").classList.add("hidden")
+        } else {
+            document.getElementById("pre-loader").classList.remove("hidden")
+        }
+    }
+
+    function shouldStartLoading(bool) {
+        shouldDisplayPreloader(!bool)
+        shouldEnableButtons(!bool)
     }
 
 })();
