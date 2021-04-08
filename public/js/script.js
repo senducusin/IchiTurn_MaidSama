@@ -27,14 +27,24 @@
         hideNotification()
     })
 
-    document.getElementById("add-card-code").addEventListener("click", function () {
-        let cardKeyword = document.getElementById("card-input").value
+    document.getElementById("add-card").addEventListener("click", addCardHandler)
 
-        addNewCardCode(cardKeyword)
-
-    })
+    document.getElementById('card-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            addCardHandler()
+        }
+    });
 
     // HELPERS
+
+    function addCardHandler() {
+        let cardKeyword = document.getElementById("card-input").value
+
+        if (cardKeyword.length > 0) {
+            shouldEnableAddButton(false)
+            addNewCard(cardKeyword)
+        }
+    }
 
     function checkDuplicates(newCard) {
         let savedCards = getCardsFromStorage()
@@ -102,7 +112,7 @@
         return false
     }
 
-    function addNewCardCode(cardKeyword) {
+    function addNewCard(cardKeyword) {
         let savedCards = getCardsFromStorage()
 
         if (savedCards.length == 0 || savedCards.indexOf(cardKeyword) == -1) {
@@ -144,10 +154,12 @@
                     } else {
                         showNotification("error", response.error)
                     }
+                    shouldEnableAddButton(true)
                 }
             })()
         } else {
             showNotification("error", "Card code is already in the list")
+            shouldEnableAddButton(true)
         }
     }
 
@@ -244,6 +256,15 @@
                 button.classList.add("disabled")
             }
         });
+    }
+
+    function shouldEnableAddButton(enable) {
+        let addButton = document.getElementById("add-card")
+        if (enable) {
+            addButton.classList.remove("disabled")
+        } else {
+            addButton.classList.add("disabled")
+        }
     }
 
     function shouldDisplayPreloader(show) {
