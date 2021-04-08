@@ -204,17 +204,17 @@
         listItem.classList.add("collection-item", "row")
 
         let divCardPasscode = document.createElement("div")
-        divCardPasscode.classList.add("card-passcode", "col", "s2")
+        divCardPasscode.classList.add("card-passcode", "col", "s3")
         divCardPasscode.innerText = card.passcode
         listItem.appendChild(divCardPasscode)
 
         let divCardName = document.createElement("div")
-        divCardName.classList.add("card-name", "col", "s6")
+        divCardName.classList.add("card-name", "col", "s7")
         divCardName.innerText = card.name
         listItem.appendChild(divCardName)
 
         let divInputField = document.createElement("div")
-        divInputField.classList.add("input-field", "col", "s4", "flexy")
+        divInputField.classList.add("input-field", "col", "s2", "flexy")
         listItem.appendChild(divInputField)
 
         let divSpacer = document.createElement("div")
@@ -222,9 +222,14 @@
         divInputField.appendChild(divSpacer)
 
         let button = document.createElement("a")
-        button.classList.add("waves-effect", "waves-light", "btn", "red")
+        button.classList.add("card-remove", "waves-effect", "waves-light", "btn", "red")
         button.id = `button-${card.passcode}`
-        button.innerText = "Remove"
+
+        let icon = document.createElement("i")
+        icon.classList.add("material-icons")
+        icon.innerText = "delete"
+
+        button.appendChild(icon)
 
         button.addEventListener("click", function () {
             let parentElementCollection = document.querySelector(".collection")

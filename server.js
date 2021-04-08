@@ -45,7 +45,7 @@ app.post("/api/add-card", (req, res) => {
 
             res.status(200).send({
                 status: "error",
-                error: `${errorMessage[0]}.${propertyName == "name" ? "\nTry using the 8-digit passcode of the card" : ""}`
+                error: `${errorMessage[0]}.${propertyName == "name" ? "\nTry using the 8-digit passcode of the card." : ""}`
             })
         })
 

@@ -40,3 +40,18 @@
     height: 35vh;
     overflow-y:scroll;
 }
+
+.card-passcode,
+.card-name{
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.card-name,
+.card-passcode,
+.card-remove {
+    height: 36px;
+}
