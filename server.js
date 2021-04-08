@@ -56,13 +56,15 @@ app.post("/api/add-card", (req, res) => {
 
 app.post("/api/send-codes", (req, res) => {
     const body = req.body
+    let email = ""
+    let cards = []
 
     if (body.hasOwnProperty("cards")) {
 
         let passcodes = []
 
-        let email = body.emailAddress
-        let cards = body.cards
+        email = body.emailAddress
+        cards = body.cards
 
         for (index in cards) {
             passcodes.push(cards[index].passcode)
