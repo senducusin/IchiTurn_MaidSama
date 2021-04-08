@@ -41,6 +41,12 @@
     overflow-y:scroll;
 }
 
+.card-remove {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .card-passcode,
 .card-name{
     position: relative;
